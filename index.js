@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use('/downloads', express.static(path.join(process.cwd(), 'downloads')));
+app.use('/downloads', express.static('/tmp'));
 
 app.post('/download', async (req, res) => {
   const { url } = req.body;
@@ -26,7 +26,7 @@ app.post('/download', async (req, res) => {
     .replace(/[^\w\s-]/g, '')  // 移除所有特殊字元，只保留字母、數字、空格、"-"
     .replace(/\s+/g, '_');      // 將空格轉換成 "_"
 
-    const outputPath = `./downloads/${title}.mp3`;
+    const outputPath = `/tmp/${title}.mp3`;  // 改存到 /tmp
 
     const command = `yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o "${outputPath}" "${url}"`;
 
@@ -47,7 +47,6 @@ app.post('/download', async (req, res) => {
   });
 });
 
-app.use('/downloads', express.static(path.resolve('downloads')));
 app.use(express.static(path.resolve('public'))); // 確保 public 目錄不會影響 downloads
 
 app.get('/', (req, res) => {
