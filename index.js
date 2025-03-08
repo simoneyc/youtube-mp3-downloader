@@ -16,7 +16,7 @@ app.post('/download', async (req, res) => {
   if (!url) return res.status(400).send('請輸入 YouTube 連結');
 
   // 取得影片標題
-  exec(`yt-dlp --get-title "${url}"`, (err, stdout) => {
+  exec(`yt-dlp-exec --get-title "${url}"`, (err, stdout) => {
     if (err) {
       console.error(err);
       return res.status(500).send('無法取得影片標題');
@@ -27,7 +27,7 @@ app.post('/download', async (req, res) => {
       .replace(/\s+/g, '_');      // 將空格轉換成 "_"
 
     const outputPath = `/tmp/${title}.mp3`;  // 存到 /tmp
-    const command = `yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o "/tmp/%(title)s.%(ext)s" "${url}"`;
+    const command = `yt-dlp-exec -f bestaudio --extract-audio --audio-format mp3 -o "/tmp/%(title)s.%(ext)s" "${url}"`;
 
     exec(command, (err) => {
       if (err) {
