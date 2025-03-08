@@ -5,7 +5,7 @@ services:
     plan: free
     buildCommand: |
       npm install
-      npm install yt-dlp
+      npm install yt-dlp-exec
     startCommand: npm start
     envVars:
       - key: NODE_VERSION
