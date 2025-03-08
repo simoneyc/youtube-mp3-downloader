@@ -3,7 +3,9 @@ services:
     name: youtube-mp3-downloader
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: |
+      npm install
+      npm install yt-dlp
     startCommand: npm start
     envVars:
       - key: NODE_VERSION
